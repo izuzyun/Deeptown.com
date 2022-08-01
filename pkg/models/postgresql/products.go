@@ -13,32 +13,6 @@ type ProductModel struct {
 	DB *sql.DB
 }
 
-/*func (m *ProductModel) Search(name string) ([]*models.Product, error) {
-	request := `SELECT id, vendor, trust_level, name, price, sold, g_from, g_to, g_way, left_, category, subcategory
-			 FROM products WHERE to_tsvector(name) @@ to_tsquery($1)
-			 ORDER BY sold
-			 DESC LIMIT 100`
-	rows, err := m.DB.Query(request, name)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var prods []*models.Product
-	for rows.Next() {
-		p := &models.Product{}
-		err = rows.Scan(&p.ID, &p.Vendor, &p.TrLev, &p.Name, &p.Price, &p.Sold, &p.G_from, &p.G_to, &p.G_way, &p.Left_, &p.Category, &p.Subcategory)
-		if err != nil {
-			return nil, err
-		}
-		prods = append(prods, p)
-	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-	return prods, nil
-}
-*/
 
 func (m *ProductModel) SearchProduct(name string) ([]*models.Product, error) {
 	request := `SELECT uuid, name, price, sold, category, subcategory, origin_country, dest_country, details, vendor_id, encode(decode(encode(image,'escape'),'base64'),'escape')
@@ -114,44 +88,3 @@ func (m *ProductModel) Stat(name string) ([]*models.Statistics, error) {
 	defer rows.Close()
 	return statistics, nil
 }
-
-/*func (m *ProductModel) ShowTen() ([]*models.Product, error) {
-	request := `SELECT id, vendor, trust_level, name, price, sold, g_from, g_to, g_way, left_, category, subcategory
-			 FROM products ORDER BY id DESC LIMIT 10`
-	rows, err := m.DB.Query(request)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var prods []*models.Product
-	for rows.Next() {
-		p := &models.Product{}
-		err = rows.Scan(&p.ID, &p.Vendor, &p.TrLev, &p.Name, &p.Price, &p.Sold, &p.G_from, &p.G_to, &p.G_way, &p.Left_, &p.Category, &p.Subcategory)
-		if err != nil {
-			return nil, err
-		}
-		prods = append(prods, p)
-	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-	return prods, nil
-}
-*/
-
-/*func (m *ProductModel) Get(id int) (*models.Product, error) {
-	request := `SELECT id, vendor, trust_level, name, price, sold, g_from, g_to, g_way, left_, category, subcategory
-			 	FROM products WHERE id = $1`
-	row := m.DB.QueryRow(request, id)
-	p := &models.Product{}
-	err := row.Scan(&p.ID, &p.Vendor, &p.TrLev, &p.Name, &p.Price, &p.Sold, &p.G_from, &p.G_to, &p.G_way, &p.Left_, &p.Category, &p.Subcategory)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, models.ErrNoRecord
-		} else {
-			return nil, err
-		}
-	}
-	return p, nil
-}*/

@@ -22,7 +22,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4000", "Сетевой адрес веб-сервера")
-	dsn := "postgres://artem:artem1906@localhost:5432/deeptown?sslmode=disable"
+	dsn := "postgres://username:password@localhost:5432/databse?sslmode=disable"
 	flag.Parse()
 
 	dbpool, err := openDB(dsn)

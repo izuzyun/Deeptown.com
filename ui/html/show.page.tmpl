@@ -1,0 +1,18 @@
+{{template "base" .}}
+ 
+{{define "title"}}Товар #{{.ID}}{{end}}
+ 
+{{define "main"}}
+<div class='snippet'>
+    <div class='metadata'>
+        <strong>{{.Vendor}} ({{.TrLev}})</strong>
+        <span>#{{.ID}}</span>
+    </div>
+    <pre><code><b>{{.Name}}</b></code> <code1>{{.Price}} $</code1>
+    <br><code_>Category: {{.Subcategory}}</code_><code_>Delivery: {{.G_way}}</code_></pre>
+    <div class='metadata'>
+        <time>Sold: {{.Sold}}<br>From: {{.G_from}}</time>
+        <time>Left: {{.Left_}}<br>To: {{.G_to}}</time>
+    </div>
+</div>
+{{end}}

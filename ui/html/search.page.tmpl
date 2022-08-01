@@ -1,0 +1,28 @@
+{{template "base" .}}
+ 
+{{define "title"}}Home page{{end}}
+ 
+{{define "main"}}
+    <form action="/search?name=value" method="get">
+        <input  type="text" name="name" id="value" placeholder="Search...">
+    </form>
+    <h2>Best products:</h2>
+    {{if .}}
+     <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Sold</th>
+        </tr>
+        {{ range $key, $information := . }}
+        <tr>
+            <td><a href='/product?uuid={{ $information.Product_UUID }}'>{{ $information.Product_Name }}</a></td>
+            <td>{{ $information.Price }}</td>
+            <td>{{ $information.Sold }}</td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+        <p>Not found</p>
+    {{end}}
+{{end}}

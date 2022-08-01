@@ -1,0 +1,60 @@
+{{template "base" .}}
+ 
+{{define "title"}}Search page{{end}}
+{{define "header"}}
+<h1><a href='/'><img src="/static/img/logo.png" alt="logo"> Deepsearch</a></h1>
+{{end}}
+{{define "main"}}
+    <form action="/search?name=value" method="get">
+        <input  type="text" name="name" id="value" placeholder="Search...">
+    </form>
+    <h2>Best products:</h2>
+    {{if .}}
+     <table>
+        {{ range $key, $information := . }}
+        <div class="product product--card">
+            <div class="product_thumbnail">
+                <img src="static//alt.jpeg" alt="Product Image">
+            </div>
+            <div class="product-desc">
+                <a href="product?uuid={{ $information.Product_UUID }}" class="product_title">
+                    <h4>{{ $information.Product_Name }}</h4>
+                </a>
+                <ul class="titlebtm">
+                    <li>
+                            <a href="vendor?uuid={{ $information.Vendor_UUID }}">{{ $information.Vendor_Name }} ({{ $information.All_sales }})</a>
+                    </li>
+                    <li class="product_cat">
+                        <a>
+                            <span class="lnr lnr-book"></span>{{ $information.Category }} 
+                        </a>
+                    </li>
+                    <li class="marketplace">
+                        <a>
+                            Marketplace: {{ $information.Market }}
+                        </a>
+                    </li>
+                </ul>
+                <p>From: {{ $information.G_from }}<br>To: {{ $information.G_to }}<br>Details: {{ $information.G_details }}
+                </p>
+            </div>
+            <div class="product-purchase">
+                <div class="price_love">
+                    <span>${{ $information.Price }}</span>
+                    <p>
+                        <span class="lnr lnr-heart"></span> {{ $information.Sold }}
+                    </p>
+                </div>
+                <div class="sell">
+                    <p>
+                        <span>Trust level: {{ $information.Trust_level }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </table>
+    {{else}}
+        <p>Not found</p>
+    {{end}}
+{{end}}

@@ -1,0 +1,28 @@
+{{template "base" .}}
+ 
+{{define "title"}}Home page{{end}}
+ 
+{{define "main"}}
+    <form action="/search?name=value" method="get">
+        <input  type="text" name="name" id="value" placeholder="Search...">
+    </form>
+    <h2>Latest added products</h2>
+    {{if .}}
+     <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>ID</th>
+        </tr>
+        {{ range $key, $product := . }}
+        <tr>
+            <td><a href='/product?id={{ $product.ID }}'>{{ $product.Name }}</a></td>
+            <td>{{ $product.Price }}</td>
+            <td>#{{ $product.ID }}</td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+        <p>In development...</p>
+    {{end}}
+{{end}}

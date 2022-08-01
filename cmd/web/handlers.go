@@ -33,40 +33,6 @@ func (app *application) landing(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-/*func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/home" {
-		app.notFound(w)
-		return
-	}
-	s, err := app.products.ShowTen()
-	if err != nil {
-		if errors.Is(err, models.ErrNoRecord) {
-			app.notFound(w)
-		} else {
-			app.serverError(w, err)
-		}
-		return
-	}
-
-	files := []string{
-		"./ui/html/home.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
-
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
-
-	err = ts.Execute(w, s)
-	if err != nil {
-		app.errorLog.Println(err.Error())
-		app.serverError(w, err)
-	}
-}*/
-
 func (app *application) searchProduct(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
 	s, err := app.products.SearchProduct(name)
@@ -103,16 +69,9 @@ func (app *application) searchProduct(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		app.serverError(w, err)
 	}
-
-	/*for _, product := range s {
-		fmt.Fprintf(w, "%v\n", product)
-	}
-	*/
 }
 
 func (app *application) showStat(w http.ResponseWriter, r *http.Request) {
-	// week := []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
-	// name := r.URL.Query().Get("name")
 	var Subcategory []string
 	var Revenue []opts.BarData
 	var Vendor_amount []opts.BarData
@@ -140,7 +99,6 @@ func (app *application) showStat(w http.ResponseWriter, r *http.Request) {
 
 	bar := charts.NewBar()
 	bar.Renderer = newSnippetRenderer(bar, bar.Validate)
-	// set some global options like Title/Legend/ToolTip or anything else
 	bar.SetGlobalOptions(
 		charts.WithTooltipOpts(opts.Tooltip{Show: true}),
 		charts.WithInitializationOpts(opts.Initialization{
@@ -243,38 +201,3 @@ func (app *application) showStat(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 	}
 }
-
-/*func (app *application) showProduct(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
-	if err != nil || id < 331 {
-		app.notFound(w)
-		return
-	}
-	s, err := app.products.Get(id)
-	//fmt.Printf("%v", s)
-	if err != nil {
-		if errors.Is(err, models.ErrNoRecord) {
-			app.notFound(w)
-		} else {
-			app.serverError(w, err)
-		}
-		return
-	}
-
-	files := []string{
-		"./ui/html/show.page.tmpl",
-		"./ui/html/base.layout.tmpl",
-		"./ui/html/footer.partial.tmpl",
-	}
-
-	ts, err := template.ParseFiles(files...)
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
-
-	err = ts.Execute(w, s)
-	if err != nil {
-		app.serverError(w, err)
-	}
-}*/

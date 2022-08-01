@@ -58,13 +58,3 @@ type Statistics struct {
 	Sold            int
 	Avprice         float64
 }
-
-type DataFloat struct {
-	Name  string
-	Value float64
-}
-
-type DataInt struct {
-	Name  string
-	Value int
-}
